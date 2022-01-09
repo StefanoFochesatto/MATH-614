@@ -1,0 +1,29 @@
+% Discretizing interval
+x = (1:.01:2)';
+
+% Setting up Design Matrix
+A = [exp(x) cos(x) sqrt(x)];
+
+% Defining the function
+y = 1./x;
+
+% Solving Least-Squares
+c = A\y
+
+    0.1521
+    1.1758
+   -0.0794
+
+% Computing accuracy under the L2 Norm
+norm(y - A*c)/sqrt(100)
+
+    0.0105
+
+% Maximum Residual
+norm(y - A*c, 'inf')
+
+
+    0.0308
+
+%Plotting Curves
+plot(x, y, x, A*c)

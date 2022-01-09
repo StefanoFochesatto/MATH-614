@@ -1,0 +1,25 @@
+function [W,R] = house(A)
+%This function takes a tall matrix A and
+%returns a matrix W with columns describing 
+%the householder reflectors and R. 
+
+%Pull dimensions
+[m,n] = size(A);
+if m < n
+    error('Size Error')
+end
+%Initialize W
+W = zeros(m, n);
+    for i = 1:n
+        %Computing v
+        x = A(i:m, i); 
+        v = sign(x(1))*(norm(x)*eye(m+1-i,1)) + x;
+        %Store v in W
+        W(i:m, i) = v;
+        %Computing R
+        vnorm = v./norm(v);
+        A(i:m, i:n) =  A(i:m, i:n) - 2*vnorm*(vnorm'* A(i:m, i:n));
+    end
+%return A as R
+R = A(1:n, 1:n);
+end

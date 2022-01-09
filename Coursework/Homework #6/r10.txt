@@ -1,0 +1,25 @@
+y = [0 0 0 1 1 1 0 0 0 0 0]
+x = [-5 -4 -3 -2 -1 0 1 2 3 4 5]
+%Fitting degree 10 polynomial
+c = polyfit(x, y, 10)
+xx = linspace(-5.1, 5.1, 100);
+yy = polyval(c, xx)
+
+%Plotting degree 10 polynomial
+plot(xx,yy,x,y, 'x')
+hold on
+axis off
+plot([-6 6], [0 0], 'k')
+hold off
+
+%Fitting degree 7 polynomial
+c = polyfit(x, y, 7)
+xx = linspace(-5.4, 5.4, 100);
+yy = polyval(c, xx)
+
+$Plotting degree 7 polynomial 
+plot(xx,yy,x,y, 'x')
+hold on
+axis off
+plot([-6 6], [0 0], 'k')
+ylim([-4 4])

@@ -1,0 +1,39 @@
+>> A = [2 1 1; 4 0 -2; 2 2 3]
+A =
+     2     1     1
+     4     0    -2
+     2     2     3
+
+>> format long
+>> eig(A)
+ans =
+   4.000000000000000
+  -0.000000000000002
+   1.000000000000001
+
+>> rank(A)
+ans =
+     2
+
+>> det(A)
+ans =
+     0
+
+>> inv(A)
+Warning: Matrix is singular to working precision. 
+ans =
+   Inf   Inf   Inf
+   Inf   Inf   Inf
+   Inf   Inf   Inf
+
+
+>> b = [-1 8 -6]
+b =
+    -1     8    -6
+
+>> A\b'
+Warning: Matrix is singular to working precision. 
+ans =
+   NaN
+   NaN
+   NaN

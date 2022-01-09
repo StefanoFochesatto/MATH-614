@@ -1,0 +1,16 @@
+uNorms = []
+vNorms = []
+sNorms = []
+aNorms = []
+
+for i = 1:5
+    [U, S, V] = svd(randn(50));
+    S = diag(sort(rand(50,1), 'descend'));
+    A = U*S*V';
+    [U2, S2, V2] = svd(A);
+
+    uNorms(i) = norm(U - U2);
+    vNorms(i) = norm(V - V2);
+    sNorms(i) = norm(S - S2);
+    aNorms(i) = norm(A - U2*S2*V2');
+end

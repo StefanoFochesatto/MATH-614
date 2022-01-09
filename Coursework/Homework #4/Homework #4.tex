@@ -1,0 +1,704 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% This top part of the document is called the 'preamble'.  Modify it with caution!
+%
+% The real document starts below where it says 'The main document starts here'.
+
+\documentclass[12pt]{article}
+
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[top=1in, bottom=1in, left=1.25in, right=1.25in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multicol}
+% Comment the following line to use TeX's default font of Computer Modern.
+\usepackage{times,txfonts}
+\usepackage{mwe}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newtheoremstyle{homework}% name of the style to be used
+  {18pt}% measure of space to leave above the theorem. E.g.: 3pt
+  {12pt}% measure of space to leave below the theorem. E.g.: 3pt
+  {}% name of font to use in the body of the theorem
+  {}% measure of space to indent
+  {\bfseries}% name of head font
+  {:}% punctuation between head and body
+  {2ex}% space after theorem head; " " = normal interword space
+  {}% Manually specify head
+\theoremstyle{homework} 
+
+% Set up an Exercise environment and a Solution label.
+\newtheorem*{exercisecore}{Exercise \@currentlabel}
+\newenvironment{exercise}[1]
+{\def\@currentlabel{#1}\exercisecore}
+{\endexercisecore}
+
+\newcommand{\localhead}[1]{\par\smallskip\noindent\textbf{#1}\nobreak\\}%
+\newcommand\solution{\localhead{Solution:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Stuff for getting the name/document date/title across the header
+\makeatletter
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot[C]{\ifnum \value{page} > 1\relax\thepage\fi}
+\fancyhead[L]{\ifx\@doclabel\@empty\else\@doclabel\fi}
+\fancyhead[C]{\ifx\@docdate\@empty\else\@docdate\fi}
+\fancyhead[R]{\ifx\@docauthor\@empty\else\@docauthor\fi}
+\headheight 15pt
+
+\def\doclabel#1{\gdef\@doclabel{#1}}
+\doclabel{Use {\tt\textbackslash doclabel\{MY LABEL\}}.}
+\def\docdate#1{\gdef\@docdate{#1}}
+\docdate{Use {\tt\textbackslash docdate\{MY DATE\}}.}
+\def\docauthor#1{\gdef\@docauthor{#1}}
+\docauthor{Use {\tt\textbackslash docauthor\{MY NAME\}}.}
+\makeatother
+
+% Shortcuts for blackboard bold number sets (reals, integers, etc.)
+\newcommand{\Reals}{\ensuremath{\mathbb R}}
+\newcommand{\Nats}{\ensuremath{\mathbb N}}
+\newcommand{\Ints}{\ensuremath{\mathbb Z}}
+\newcommand{\Rats}{\ensuremath{\mathbb Q}}
+\newcommand{\Cplx}{\ensuremath{\mathbb C}}
+%% Some equivalents that some people may prefer.
+\let\RR\Reals
+\let\NN\Nats
+\let\II\Ints
+\let\CC\Cplx
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% The main document start here.
+
+% The following commands set up the material that appears in the header.
+\doclabel{Math 614: Homework 4}
+\docauthor{Stefano Fochesatto}
+\docdate{\today}
+
+\begin{document}
+
+
+\begin{exercise}{P10} Use by-hand calculations to determine SVDs of the following matrices. 
+  Note that in the decomposition $A = U \Sigma V^*$, the factor $\Sigma$ is unique but the factors
+  $U, V$ are not, and thus there will be more than one correct answer. 
+  \begin{enumerate}
+    \item[a.]
+    \begin{equation*}
+      \begin{bmatrix}
+        5 & 0\\
+        0 & -3
+      \end{bmatrix}
+    \end{equation*} 
+    \solution 
+    Since the given matrix is diagonal, and square we can simply factor into $U\Sigma V^*$, like the following 
+    \begin{equation*}
+      \begin{bmatrix}
+        5 & 0\\
+        0 & -3
+      \end{bmatrix} = 
+      \begin{bmatrix}
+        1 & 0\\
+        0 & 1
+      \end{bmatrix}
+      \begin{bmatrix}
+        5 & 0\\
+        0 & 3
+      \end{bmatrix}
+      \begin{bmatrix}
+        1 & 0\\
+        0 & -1
+      \end{bmatrix}
+    \end{equation*}
+    We could throw the $[0 -1]'$ column into either unitary matrix, since $\Sigma$ must contain all non-negative 
+    values and be in decreasing diagonal order.
+    \vspace{.15in}
+
+
+
+
+    \item[b.]
+    \begin{equation*}
+    \begin{bmatrix}
+      0 & 0\\
+      0 & 0\\
+      3 & 0
+    \end{bmatrix} 
+  \end{equation*}
+  \solution Note that the given matrix would be in the form of $\Sigma$ simply by swapping the first and 
+  third rows. Doing so we get the following decomposition, 
+  \begin{equation*}
+    \begin{bmatrix}
+      0 & 0\\
+      0 & 0\\
+      3 & 0
+    \end{bmatrix}  = 
+    \begin{bmatrix}
+      0 & 0 & 1\\
+      0 & 1 & 0\\
+      1 & 0 & 0
+    \end{bmatrix} 
+    \begin{bmatrix}
+      3 & 0\\
+      0 & 0\\
+      0 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0\\
+      0 & 1
+    \end{bmatrix}
+  \end{equation*}
+  \vspace{.15in}
+
+
+
+
+    \item[c.]
+    \begin{equation*}
+      \begin{bmatrix}
+        0 & 0\\
+        1 & 1
+      \end{bmatrix}
+    \end{equation*} 
+  \solution Recall from Theorem 5.4 that we can compute the singular values of a matrix
+  by solving for the square root of the eigenvalues of $A^*A$ and $AA^*$. In our case, let's consider $AA^*$, 
+  \begin{equation*}
+    AA^* = 
+    \begin{bmatrix}
+      0 & 0\\
+      1 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0\\
+      1 & 0
+    \end{bmatrix}
+     = 
+     \begin{bmatrix}
+      0 & 0\\
+      0 & 2
+    \end{bmatrix}.
+  \end{equation*}
+  Note that since $AA^*$ is diagonal matrix the eigenvalues are the values on the diagonal. 
+  Thus our eigenvalues are $\lambda_1 = 0$ and $\lambda_2 = 2$. Solving for the corresponding eigenvectors, 
+  we get the following, 
+  \begin{align*}
+    I\lambda_1 - 
+    \begin{bmatrix}
+      0 & 0\\
+      0 & 2
+    \end{bmatrix}v_1 &= 
+    \begin{bmatrix}
+      0 \\
+      0 
+    \end{bmatrix},\\
+    \begin{bmatrix}
+        0 & 0\\
+        0 & -2
+    \end{bmatrix}v_1 &= 
+    \begin{bmatrix}
+        0 \\
+        0 
+    \end{bmatrix}.
+  \end{align*}
+  Thus $v_1 = [1;0]$ and solving for the second eigenvector,
+  \begin{align*}
+    I\lambda_2 - 
+    \begin{bmatrix}
+      0 & 0\\
+      0 & 2
+    \end{bmatrix}v_2 &= 
+    \begin{bmatrix}
+      0 \\
+      0 
+    \end{bmatrix},\\
+      \begin{bmatrix}
+        2 & 0\\
+        0 & 0
+      \end{bmatrix}v_2 &= 
+      \begin{bmatrix}
+        0 \\
+        0 
+      \end{bmatrix}.
+  \end{align*}
+Thus we get that $v_2 = [0;1]$. By Theorem 5.4 we know that the singular values of 
+$A$ are $\sigma_1 = \sqrt{2}$ and $\sigma_2 = 0$. Furthermore the eigenvalues to our corresponding
+sigma form the columns of the matrix $U$. Putting everything together we get that,
+  \begin{equation*}
+    \Sigma = 
+    \begin{bmatrix}
+      \sqrt{2} & 0\\
+      0 & 0
+    \end{bmatrix},
+  \end{equation*}
+  \begin{equation*}
+    U = 
+    \begin{bmatrix}
+      0 & 1\\
+      1 & 0
+    \end{bmatrix}.
+  \end{equation*}
+  To solve for $V^*$ lets first recall the column/row interpretation of the SVD, 
+  \begin{equation*}
+    A = u_i \sigma_i v^*_i.
+  \end{equation*}
+  Solving for the row $v^*_i$,
+  \begin{equation*}
+   \dfrac{u^*_iA}{\sigma_i} = v^*_i. 
+  \end{equation*}
+  Solving for the first row $v^*_1$ we get the following, 
+  \begin{equation*}
+    v^*_1 = \dfrac{
+      \begin{bmatrix}
+        0 \\
+        1 
+      \end{bmatrix}'
+      \begin{bmatrix}
+        0 & 0\\
+        1 & 1
+      \end{bmatrix}}{
+        \sqrt{2}
+      }
+       = \begin{bmatrix}
+        \frac{1}{\sqrt{2}} \\
+        \frac{1}{\sqrt{2}}
+      \end{bmatrix}'
+  \end{equation*}
+  Since we only have one non-trivial singular value, to get the second row $v^*_2$ all we need is 
+  an orthonormal vector to $v^*_1$, so we can consider the following, 
+  \begin{equation*}
+    v^*_2 = \begin{bmatrix}
+      \frac{1}{\sqrt{2}} \\
+      -\frac{1}{\sqrt{2}}
+    \end{bmatrix}'
+  \end{equation*} 
+Thus our $V^*$ matrix is the following,
+\begin{equation*}
+  = \begin{bmatrix}
+    \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} 
+  \end{bmatrix}.
+\end{equation*}
+The full SVD for $A$ comes out to, 
+\begin{equation*}
+  A = 
+  \begin{bmatrix}
+    0 & 1\\
+    1 & 0
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sqrt{2} & 0\\
+    0 & 0
+  \end{bmatrix}
+  \begin{bmatrix}
+    \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} 
+  \end{bmatrix}.
+\end{equation*}
+
+  \vspace{.15in}
+
+
+    \item[d.]   
+    \begin{equation*}
+      \begin{bmatrix}
+        2 & 1\\
+        1 & 2
+      \end{bmatrix}
+    \end{equation*}  
+  \solution Again recalling Theorem 5.4 and considering the eigenvalue decomposition of $A^*A$ we 
+  get the following, 
+  \begin{equation*}
+    A^*A = 
+    \begin{bmatrix}
+      2 & 1\\
+      1 & 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      2 & 1\\
+      1 & 2
+    \end{bmatrix}
+     = 
+    \begin{bmatrix}
+      5 & 4\\
+      4 & 5
+    \end{bmatrix}.
+  \end{equation*}
+  Solving for the eigenvalues, 
+  \begin{align*}
+    det\left(\begin{bmatrix}
+      \lambda - 5 & 4\\
+      4 & \lambda - 5
+    \end{bmatrix}\right) &= 0\\
+    (\lambda - 5)^2 - 4^2 &= 0 \\
+    \lambda^2 - 10\lambda + 9 &= 0\\
+    (\lambda - 9)(\lambda - 1) &= 0.
+  \end{align*}
+  Therefore we get that the eigenvalues $\lambda_1 = 9$ and $\lambda_2 = 1$. Solving for the 
+  eigenvectors we get, 
+  \begin{align*}
+    I\lambda_1 - 
+    \begin{bmatrix}
+      5 & 4\\
+      4 & 5
+    \end{bmatrix}v_1 &= 
+    \begin{bmatrix}
+      0 \\
+      0 
+    \end{bmatrix},\\
+    \begin{bmatrix}
+      4 & -4\\
+      -4 & 4
+    \end{bmatrix}v_1 &= 
+      \begin{bmatrix}
+        0 \\
+        0 
+      \end{bmatrix}.
+  \end{align*}
+  Which gives a $v_1 = [1;1]$, normalizing we get $v_1 = [\frac{1}{\sqrt{2}};\frac{1}{\sqrt{2}}]$. Solving 
+  for the second eigenvector, 
+  \begin{align*}
+    I\lambda_2 - 
+    \begin{bmatrix}
+      5 & 4\\
+      4 & 5
+    \end{bmatrix}v_2 &= 
+    \begin{bmatrix}
+      0 \\
+      0 
+    \end{bmatrix},\\
+    \begin{bmatrix}
+      -4 & -4\\
+      -4 & -4
+    \end{bmatrix}v_2 &= 
+      \begin{bmatrix}
+        0 \\
+        0 
+      \end{bmatrix}.
+  \end{align*}
+  Which gives us $v_2 = [-1;1]$, and normalizing we get $v_2 = [-\frac{1}{\sqrt{2}};\frac{1}{\sqrt{2}}]$.
+  By Theorem 5.4 we know have values for, 
+  \begin{equation*}
+    \Sigma = 
+    \begin{bmatrix}
+      3 & 0\\
+      0 & 1
+    \end{bmatrix},
+  \end{equation*}
+  \begin{equation*}
+    V^* = 
+    \begin{bmatrix}
+      \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+      -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+    \end{bmatrix}.
+  \end{equation*}
+  Considering the column/row interpretation of the SVD we can solve for the columns of $U$,
+  \begin{equation*}
+    A = u_i \sigma_i v^*_i.
+  \end{equation*}
+  Solving for the column $u_i$ by left multiplying both sides by $v_i$ and dividing by $\sigma_i$,
+  \begin{equation*}
+   \dfrac{Av_i}{\sigma_i} = u_i. 
+  \end{equation*}
+  Substituting to get $u_1$,
+  \begin{equation*}
+    \dfrac{
+      \begin{bmatrix}
+        2 & 1\\
+        1 & 2
+      \end{bmatrix}
+      \begin{bmatrix}
+        \frac{1}{\sqrt{2}} \\
+        \frac{1}{\sqrt{2}} 
+      \end{bmatrix}}{3} = 
+      \begin{bmatrix}
+        \frac{1}{\sqrt{2}} \\
+        \frac{1}{\sqrt{2}} 
+      \end{bmatrix}.
+  \end{equation*}
+  Substituting to solve for $u_2$, 
+  \begin{equation*}
+    \dfrac{
+      \begin{bmatrix}
+        2 & 1\\
+        1 & 2
+      \end{bmatrix}
+      \begin{bmatrix}
+        -\frac{1}{\sqrt{2}} \\
+        \frac{1}{\sqrt{2}} 
+      \end{bmatrix}}{1} = 
+      \begin{bmatrix}
+        -\frac{1}{\sqrt{2}} \\
+        \frac{1}{\sqrt{2}} 
+      \end{bmatrix}.
+  \end{equation*}
+  Therefore the full SVD of $A$ comes out to, 
+  \begin{equation*}
+    A = 
+    \begin{bmatrix}
+      \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\
+      \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+    \end{bmatrix}
+    \begin{bmatrix}
+      3 & 0\\
+      0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}\\
+      -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+    \end{bmatrix}.
+  \end{equation*}
+  \end{enumerate}
+\end{exercise}
+\vspace{.25in}
+
+
+
+
+
+
+\begin{exercise}{P11} Theorem 5.7 interprets the SVD as saying that any matrix $A$ is the sum of rank-one
+  matrices, a sum of outer products from columns of $U$ and $V$, and weightes by the singular values $\sigma_j$.
+  Furthermore Theorem 5.8 shows that the partial sums oare the nearest lower-rank approximations to $A$
+  in the induced 2-norm. The goal of this exercise is to see these idea.\\
+  \begin{enumerate}
+    \item[a.] Consider the 4x3 matrix, 
+    \begin{equation*}
+      A = 
+      \begin{bmatrix}
+        3 &1& 4 \\
+        1 &5& 9 \\
+        2 &6& 5 \\
+        3 &5& 8
+      \end{bmatrix}
+    \end{equation*}
+    Using Matlab/Octave to compute the full SVD of $A$. What is the rank of $A$?
+    \solution
+    \textbf{Code:}
+    \begin{center}
+      \lstinputlisting{m1.txt}
+    \end{center}
+    \vspace{.15in}
+
+
+    \item[b.] Part (a) suggests that printing the entries of generic unitary matrixes is not very informative. 
+    On the other hand we can view matrixes as images. Generate side-by-side block images of the matrix $A$, and its 
+    rank-two and rank-one best approximations.\\
+    \solution 
+    Using the following function, along with the given blockimage.m script were used to generate the blockimages of 
+    the rank one and rank two approximations of A, \\
+    \textbf{Code:}
+    \begin{center}
+      \lstinputlisting{Rank.txt}
+    \end{center}
+  
+    \begin{figure}[H]
+      \centering
+      \begin{subfigure}[b]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{A.png}
+          \caption{BlockImage of A}
+
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{A1.png}
+          \caption{Rank 1 Approx.}
+
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{A2.png}
+          \caption{Rank 2 Approx.}
+
+      \end{subfigure}
+         \caption{Matrix A Approximations}
+  \end{figure}
+  \vspace{.15in}
+
+  \item[c.] Describe in words what the image of any rank-one matrix looks like.\\
+  \solution
+  A rank-one matrix has the property that all column vectors are linearly dependent, and all 
+  row vectors are linearly dependent. Therefore when we look at the block image of a rank one matrix
+  each row will be some multiple of every other row and each column will be some multiple of every other column.
+  More broadly for larger rank-one matrices we might begin to notice a faint plaided pattern, where white lines 
+  begin to form in the rows and columns that are generated by a multiple close to zero. 
+  \end{enumerate}
+\end{exercise}
+\vspace{1in}
+
+
+\begin{exercise}{3.4} Example 3.6 shows that if $E$ is an outer product $E = uv^*$, then $||E||_2 = ||u||_2||v||_2$.
+  Is the same true for the Frobenius norm, i.e., $||E||_F = ||u||_F||v||_F$? Prove it or give a counter example.\\
+  \solution Suppose that  $E$ is an outer product $E = uv^*$. Now consider the Forbenius Norm of the matrix $E$ and by substitution we
+  get, 
+  \begin{equation*}
+    ||E||_F = ||uv^*||_F.
+  \end{equation*}
+  Since each term of the outer product can be written in the form $u_iv_j$ we can substitute into the definition of the Forbenius norm to get, 
+  \begin{equation*}
+    ||E||_F = \sqrt{\sum_{i = 1}^m \sum_{j = 1}^n |u_iv_j|^2}.
+  \end{equation*}
+  Through some algebra we get, 
+  \begin{align*}
+    ||E||_F &= \sqrt{\sum_{i = 1}^m \sum_{j = 1}^n |u_iv_j|^2},\\
+            &= \sqrt{\sum_{i = 1}^m \sum_{j = 1}^n |u_i|^2|v_j|^2},\\
+            &= \sqrt{\sum_{i = 1}^m |u_i|^2 \sum_{j = 1}^n|v_j|^2},\\
+            &= \sqrt{\sum_{i = 1}^m |u_i|^2} \sqrt{\sum_{j = 1}^n|v_j|^2}.\\
+  \end{align*}
+  Invoking the definition of the Forbenius norm we finally get,
+  \begin{equation*}
+    ||E||_F =  \sqrt{\sum_{i = 1}^m |u_i|^2} \sqrt{\sum_{j = 1}^n|v_j|^2} = ||u||_F||v||_F.
+  \end{equation*}
+\end{exercise}
+\vspace{1in}
+
+\begin{exercise}{4.4} Two matrices $A,B \in \CC^{mxm}$ are unitarily equivalent if $A = QBQ^*$ for some 
+  unitary $Q\in \CC^{mxm}$. Is it true of false that $A$ and $B$ are unitarily equivalent if and only if they have 
+  the same singular values?\\
+  \begin{proof}{Contradiction $(\rightarrow)$}:
+    Suppose that $A,B \in \CC^{mxm}$ are unitarily equivalent with SVDs $A = U_1\Sigma_1V^*_1$ and $B = U_2\Sigma_2V^*_2$ such that, 
+    $\Sigma_1 \neq \Sigma_2$. By the definition of unitarily equivalent we know that for some unitary $Q\in \CC^{mxm}$, 
+    \begin{equation*}
+      A = QBQ^*.
+    \end{equation*}
+    By substitution we get that, 
+    \begin{equation*}
+      A = U_1\Sigma_1V^*_1 =  QU_2\Sigma_2V^*_2Q^*.
+    \end{equation*}
+    Note that since $Q$, $U$, and $V^*$ are unitary $QU_2$ and $V^*_2Q^*$ are also unitary. Thus $A$ has two distinct SVDs contradicting 
+    Theorem 4.1 (Uniqueness of the SVD).
+  \end{proof}
+  \begin{proof}{Counter Example $(\leftarrow)$}:
+    Consider the following matrices, 
+    \begin{equation*}
+      A = \begin{bmatrix}
+        1 & 0\\
+        0 & 0
+      \end{bmatrix},\text{    }\hfill
+      B = \begin{bmatrix}
+        1 & 0\\
+        0 & 1
+      \end{bmatrix}.
+    \end{equation*} 
+    One can quickly see that both matrices have the same singular values. Plugging into the the unitary equivalents formula we get, 
+    \begin{equation*}
+      \begin{bmatrix}
+        1 & 0\\
+        0 & 0
+      \end{bmatrix}
+      =
+      Q
+      \begin{bmatrix}
+        1 & 0\\
+        0 & 1
+      \end{bmatrix}
+      Q^*
+      = 
+      QQ^*
+      =
+      I.
+    \end{equation*} 
+    A clear contradiction. 
+  \end{proof}
+\end{exercise}
+
+\vspace{1in} c
+
+\begin{exercise}{5.1} In Example 3.1 we considered the matrix (3.7) and asserted, among other things, 
+  that its 2-norm is approximately 2.9208. Using the SVD, work out the exact values for the minimum 
+  and maximum singular values.\\
+  \solution Recall the matrix from example 3.1,
+  \begin{equation*}
+    A = 
+    \begin{bmatrix}
+      1 & 2\\ 
+      0 & 2
+    \end{bmatrix}.
+  \end{equation*}
+  From Theorem 5.4 we know that to solve for the singular values of $A$ need to solve for the square root of tbe eigenvalues of 
+  $AA^*$ (or $A^*A$), setting up the characteristic equation, 
+  \begin{equation*}
+    det\left(
+      \begin{bmatrix}
+        \lambda - 5 & 4\\ 
+        4 & \lambda - 4
+      \end{bmatrix}
+    \right) = 0,
+  \end{equation*}
+  \begin{equation*}
+        (\lambda - 5)(\lambda - 4) - 4^2 = 0,
+  \end{equation*}
+  \begin{equation*}
+    \lambda^2 - 9\lambda + 4  = 0.
+\end{equation*}
+Solving with the quadratic formula we get that $\lambda_1=\frac{9+\sqrt{65}}{2}$ and $\lambda_2=\frac{9-\sqrt{65}}{2}$.
+Taking the square roots we get the singular values, 
+\begin{equation*}
+  \sigma_1 = \sqrt{\frac{9+\sqrt{65}}{2}},
+\end{equation*}
+\begin{equation*}
+  \sigma_2 = \sqrt{\frac{9-\sqrt{65}}{2}}.
+\end{equation*}  
+\end{exercise}
+\vspace{1in}
+
+\begin{exercise}{5.2} Using the SVD, prove that any matrix in $\CC^{mxn}$ is the limit of a sequence of matrices 
+  of full rank. In other words, prove that the set of full-rank matrixes is a dense subset of $\CC^{mxn}$. Use 
+  the 2-norm for your proof.\\
+  \begin{proof} Let $A \in \CC^{mxn}$ with an SVD such that $A = U\Sigma V^*$. Now suppose some $A_n \in \CC^{mxn}$ with an SVD such that $A_n = U(\Sigma - \frac{1}{n}I)V^*$ (full-rank is implicit in this definition). 
+    Let $\epsilon > 0$ and note that by the Archimedean Property there exists some $N \in \NN$ such that for all $n \geq N$ we know that $N > \frac{1}{\epsilon}$. Consider the following, 
+    \begin{equation*}
+      ||A_n - A||_2 = ||U\left(\Sigma + \frac{1}{n}I\right)V^* - U\Sigma V^*||_2  = ||U\left(\frac{1}{n}I\right)V^*||_2 = \frac{1}{n} < \frac{1}{N} < \epsilon.
+    \end{equation*}
+    Thus any matrix in $\CC^{mxn}$ is the limit of a sequence of matrices 
+    of full rank.
+
+  \end{proof}
+
+  
+\end{exercise}
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

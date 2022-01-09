@@ -1,0 +1,14 @@
+INFnorm = zeros(30, 1);
+
+for n = 1:30
+    m = (2*n) - 1;
+    x = linspace(-1, 1, n);
+    y = linspace(-1, 1, m);
+    X = fliplr(vander(x));
+    Y = fliplr(vander(y));
+    Y = Y(:, 1:n);
+    A = Y * inv(X);
+    INFnorm(n) = norm(A, 'inf');
+
+end
+INFnorm

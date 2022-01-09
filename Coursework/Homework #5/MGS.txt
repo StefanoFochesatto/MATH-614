@@ -1,0 +1,10 @@
+for i = 1:n
+    v_i = a_i
+
+for i = 1:n
+    r_ii = ||v_1||
+    q_i = v_i/r_ii
+
+    for j = i+1:n
+        r_ij = q_i^*v_i
+        v_j = v_j - r_ijq_i

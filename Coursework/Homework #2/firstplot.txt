@@ -1,0 +1,17 @@
+% Used a package called ezimplot3 for plotting implicit functions
+>> f1 = 'x^2 + y^2 + z^2 - 4'
+f1 =
+    'x^2 + y^2 + z^2 - 4'
+
+>> f2 = 'cos(\pi*y) - x'
+f2 =
+    'cos(pi*y) - x'
+
+>> f3 = 'y^2 - z'
+f3 =
+    'y^2 - z'
+
+hold on
+>> ezimplot3(f1)
+>> ezimplot3(f2)
+>> ezimplot3(f3)

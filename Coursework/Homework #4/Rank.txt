@@ -1,0 +1,7 @@
+function [Ahat] = RankApprox(A, n)
+%The following code takes a matrix A and a 
+%rank n and returns A's best rank n 
+%approximation. 
+
+[U, S, V] = svd(A);
+Ahat = U(:,1:n)*S(1:n,1:n)*V(:,1:n)';

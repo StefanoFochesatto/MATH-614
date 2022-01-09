@@ -1,0 +1,34 @@
+LeastSquaresMethods = [];
+m = 50;
+n = 12;
+t = linspace(0,1,m);
+FullVandermonde = fliplr(vander(t));
+A = FullVandermonde(:, 1:n);
+b = cos(4*t');
+
+%Part A Normal Equation
+LeastSquaresMethods = [LeastSquaresMethods (A'*A)\(A'*b)];
+
+%Part B Modified Gram Shmidt
+[Qmgs, Rmgs] = mgs(A);
+LeastSquaresMethods = [LeastSquaresMethods Rmgs\(Qmgs'*b)];
+
+%Part C Householder
+[WHouse,RHouse] = house(A);
+QHouse = formQ(WHouse);
+LeastSquaresMethods = [LeastSquaresMethods RHouse\(QHouse'*b)];
+
+%Part D Householder(Matlab)
+[Q, R] = qr(A);
+LeastSquaresMethods = [LeastSquaresMethods R\(Q'*b)];
+
+%Part E Matlab solve
+LeastSquaresMethods = [LeastSquaresMethods A\b];
+
+%Part F SVD solve
+[U, S, V] = svd(A);
+LeastSquaresMethods = [LeastSquaresMethods V*(S\(U'*b))];
+
+
+
+    

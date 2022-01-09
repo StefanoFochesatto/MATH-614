@@ -1,0 +1,8 @@
+P = randproj(4,3)
+ProjectorCheck = norm(P^2 - P)
+(U,S,V) = svd(P);
+println(ProjectorCheck)
+print(S)
+
+>   7.506413274784675e-16
+>   [1.0000000000000004, 1.0, 0.9999999999999998, 9.843583432324734e-18]

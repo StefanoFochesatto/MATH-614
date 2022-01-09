@@ -1,0 +1,8 @@
+A = circu([1:20]);
+[vec, val] = eig(A);
+hold on
+plot([1:20],real(vec(:,1)))
+plot([1:20],real(vec(:,2)))
+plot([1:20],real(vec(:,3)))
+plot([1:20],real(vec(:,4)))
+plot([1:20],real(vec(:,5)))

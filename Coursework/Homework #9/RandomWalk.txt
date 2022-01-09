@@ -1,0 +1,24 @@
+function [PageRank, Walk, count] = RandomWalk(G, WalkLength)
+n = size(G, 1);
+Walk = zeros(1, WalkLength);
+count = zeros(1, n);
+
+%Randomly choose starting node
+Walk(1) = ceil(n*rand(1));
+count(Walk(1)) = count(Walk(1)) + 1 ;
+for i = 2:WalkLength
+    PossiblePaths = [];
+    for j = 1:n
+        CrossRoad = G(:, Walk(i - 1));
+        if CrossRoad(j) == 1
+            PossiblePaths = [PossiblePaths j];
+        end 
+    end
+    NextNode = randsample(PossiblePaths, 1);
+    Walk(i) = NextNode;
+    count(Walk(i)) = count(Walk(i)) + 1 ;
+end
+
+PageRank = count./WalkLength
+end
+

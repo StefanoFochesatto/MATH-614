@@ -1,0 +1,91 @@
+## Running RandomWalk on the Graph from part C
+P22C
+>> PageRank
+
+    0.1909
+    0.2807
+    0.3786
+    0.0841
+    0.0657
+
+>> [RandomPageRank, randomWalk, NodeCounts] = RandomWalk(G, 1000000);
+>> RandomPageRank
+
+    0.2466
+    0.3596
+    0.2218
+    0.0999
+    0.0721
+
+>> norm(abs(RandomPageRank - PageRank))
+
+    0.6590
+
+>> [RandomPageRank, randomWalk, NodeCounts] = RandomWalk(G, 10000000);
+>> RandomPageRank
+
+    0.2467
+    0.3590
+    0.2219
+    0.0999
+    0.0725
+
+>> norm(abs(RandomPageRank - PageRank))
+
+    0.6584
+
+
+
+
+
+P22D
+>> PageRank
+
+    0.0516
+    0.0269
+    0.1729
+    0.2151
+    0.0516
+    0.1312
+    0.1632
+    0.0561
+    0.0342
+    0.0972
+
+
+>> [RandomPageRank, randomWalk, NodeCounts] = RandomWalk(G, 1000000);
+>> RandomPageRank
+
+    0.1132
+    0.1072
+    0.1462
+    0.0965
+    0.0366
+    0.1212
+    0.1596
+    0.0498
+    0.0651
+    0.1047
+    
+>> norm(abs(RandomPageRank - PageRank))
+
+    0.6531
+
+
+>> [RandomPageRank, randomWalk, NodeCounts] = RandomWalk(G, 10000000);
+>> RandomPageRank
+
+    0.1129
+    0.1070
+    0.1468
+    0.0966
+    0.0367
+    0.1213
+    0.1593
+    0.0495
+    0.0652
+    0.1048
+
+>> norm(abs(RandomPageRank - PageRank))
+
+    0.1621

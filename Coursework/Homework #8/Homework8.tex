@@ -1,0 +1,408 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% This top part of the document is called the 'preamble'.  Modify it with caution!
+%
+% The real document starts below where it says 'The main document starts here'.
+
+\documentclass[12pt]{article}
+
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[top=1in, bottom=1in, left=1.25in, right=1.25in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multicol}
+% Comment the following line to use TeX's default font of Computer Modern.
+\usepackage{times,txfonts}
+\usepackage{mwe}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newtheoremstyle{homework}% name of the style to be used
+  {18pt}% measure of space to leave above the theorem. E.g.: 3pt
+  {12pt}% measure of space to leave below the theorem. E.g.: 3pt
+  {}% name of font to use in the body of the theorem
+  {}% measure of space to indent
+  {\bfseries}% name of head font
+  {:}% punctuation between head and body
+  {2ex}% space after theorem head; " " = normal interword space
+  {}% Manually specify head
+\theoremstyle{homework} 
+
+% Set up an Exercise environment and a Solution label.
+\newtheorem*{exercisecore}{Exercise \@currentlabel}
+\newenvironment{exercise}[1]
+{\def\@currentlabel{#1}\exercisecore}
+{\endexercisecore}
+
+\newcommand{\localhead}[1]{\par\smallskip\noindent\textbf{#1}\nobreak\\}%
+\newcommand\solution{\localhead{Solution:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Stuff for getting the name/document date/title across the header
+\makeatletter
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot[C]{\ifnum \value{page} > 1\relax\thepage\fi}
+\fancyhead[L]{\ifx\@doclabel\@empty\else\@doclabel\fi}
+\fancyhead[C]{\ifx\@docdate\@empty\else\@docdate\fi}
+\fancyhead[R]{\ifx\@docauthor\@empty\else\@docauthor\fi}
+\headheight 15pt
+
+\def\doclabel#1{\gdef\@doclabel{#1}}
+\doclabel{Use {\tt\textbackslash doclabel\{MY LABEL\}}.}
+\def\docdate#1{\gdef\@docdate{#1}}
+\docdate{Use {\tt\textbackslash docdate\{MY DATE\}}.}
+\def\docauthor#1{\gdef\@docauthor{#1}}
+\docauthor{Use {\tt\textbackslash docauthor\{MY NAME\}}.}
+\makeatother
+
+% Shortcuts for blackboard bold number sets (reals, integers, etc.)
+\newcommand{\Reals}{\ensuremath{\mathbb R}}
+\newcommand{\Nats}{\ensuremath{\mathbb N}}
+\newcommand{\Ints}{\ensuremath{\mathbb Z}}
+\newcommand{\Rats}{\ensuremath{\mathbb Q}}
+\newcommand{\Cplx}{\ensuremath{\mathbb C}}
+\newcommand{\emach}{\ensuremath{\epsilon_{machine}}}
+%% Some equivalents that some people may prefer.
+\let\RR\Reals
+\let\NN\Nats
+\let\II\Ints
+\let\CC\Cplx
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% The main document start here.
+
+% The following commands set up the material that appears in the header.
+\doclabel{Math 614: Homework 8}
+\docauthor{Stefano Fochesatto}
+\docdate{\today}
+
+
+\begin{document}
+
+
+\begin{exercise}{P21} The major goal of this exercise is to show that the usual matrix-vector product algorithm is backward-stable
+  when we regard the matrix as the input; see part (c). For simplicity I'll assume all entries are real numbers. Always assume axiom (13.5) and
+  (13.7) hold.\\
+  \begin{enumerate}
+    \item[a.] Let us start in one dimension. Fix $x\in \RR^1$. Show that if the problem is scalar multiplication, $f(a) = ax$ for $a \in \RR^1$, 
+    then the obvious algorithm, $\tilde{f}(a) = fl(a) \otimes fl(x)$ is backwards stable. \\
+    \solution From the given algorithm we know that $a$ and $x$ must be rounded to floating point values, then we apply the $\otimes$ operation. 
+    By 13.5 we know that, 
+    \begin{equation*}
+      fl(a) = a(1 + \epsilon_1),
+    \end{equation*}
+    \begin{equation*}
+      fl(x) = x(1+ \epsilon_2), 
+    \end{equation*}
+    for some $|\epsilon_{1}|, |\epsilon_{2}| \leq \emach$. Looking at $\otimes$ we know from 13.7 that, 
+    \begin{equation*}
+      fl(a) \otimes fl(x) = (fl(a) \times fl(x))(1 + \epsilon_{3}).
+    \end{equation*}
+    for some $\epsilon_{3} \leq \emach$. By substitution we get, 
+    \begin{align*}
+      \tilde{f}(a) &= fl(a) \otimes fl(x)\\
+      &= (fl(a) \times fl(x))(1 + \epsilon{3})\\
+      &= a(1 + \epsilon_1)(1 + \epsilon_1)(1 + \epsilon_{3})x\\
+      &= \tilde{a}x,\\
+      &= f(\tilde{a}).
+    \end{align*}
+    With the last equality let $\tilde{a} = a(1 + \epsilon_1)(1 + \epsilon_1)(1 + \epsilon_{3}) = a(1 + O(\emach))$, and therefore scalar multiplication is 
+    backwards stable. 
+  \vspace{.15in}
+
+
+
+
+
+  \item[b.] Fix $x\in \RR^2$. Show that if $a \in \RR^2$ then the obvious algorithm 
+  $\tilde{f}(a) = fl(a_1) \otimes f(x_1) \oplus fl(a_1) \otimes fl(x_2)$ for the inner product problem $f(a) = a^{T}x$ is 
+  backwards stable.\\
+  \solution First let's consider the obvious algorithm proposed in the problem statement, 
+  \begin{equation*}
+    \tilde{f}(a) = [fl(a_1) \otimes f(x_1)] \oplus [fl(a_1) \otimes fl(x_2)].
+  \end{equation*}
+  Substituting the solution from part $a$ we get the following, 
+  \begin{align*}
+    \tilde{f}(a) &= \tilde{f}_{p.A}(a_1) \oplus \tilde{f}_{p.A}(a_2),\\
+     &= \hat{a}_1x_1 \oplus \hat{a}_2x_2.
+  \end{align*}
+  From theorem 13.7 we know the following, 
+  \begin{equation*}
+    \hat{a}_1x_1 \oplus \hat{a}_2x_2 = (\hat{a}_1x_1 + \hat{a}_2x_2)(1 + \epsilon_{1}),
+  \end{equation*}
+  for some $\epsilon_{1} \leq \emach$. By substitution we get, 
+  \begin{align*}
+    \tilde{f}(a) &=  (\hat{a}_1x_1 + \hat{a}_2x_2)(1 + \epsilon_{1}),\\
+                &=(\hat{a}_1x_1 + \hat{a}_2x_2)(1 + \epsilon_{1}),\\
+                &=\hat{a}_1(1 + \epsilon_{1})x_1 + \hat{a}_2(1 + \epsilon_{1})x_2,\\
+                &=\tilde{a}_1x_1 + \tilde{a}_2x_2,\\
+                &=f(\tilde{a}).
+  \end{align*}
+  With the last equalities, we let $\tilde{a}_i = \hat{a}_i(1 + \epsilon_{1}) = a_i(1 + O(\emach))$. Now consider the following, 
+  \begin{align*}
+    \dfrac{||\tilde{a} - a||}{||a||} &= \dfrac{||(a_1(1 + O(\emach)) - a_1) + (a_2(1 + O(\emach)) - a_2)||}{||a||}.\\
+    &\leq \dfrac{||(a_1(1 + O(\emach)) - a_1)|| + ||(a_2(1 + O(\emach)) - a_2)||}{||a||}.\\
+    &= \dfrac{||(a_1(O(\emach))|| + ||a_2(O(\emach))||}{||a||}.\\
+    &= \dfrac{||a_1|| + ||a_2||}{||a||} ||(O(\emach))||.\\
+    &= O(\emach).
+  \end{align*}
+  \vspace{.15in}
+  
+  \item[c.] Fix $A \in \RR^n$. Show that if $A \in \RR^{mxn}$ then the obvious algorithm $\tilde{f}(A)$ for the 
+  matrix-vector product problem $f(A) = Ax$ is backward stable.\\
+  \solution First let $\hat{f}(a)$ be the algorithm for the inner product problem from section $b$, and 
+  recall that $Ax$ can be written as a set of inner products with the rows $a_i$ of $A$ and $x$.  
+  \begin{equation*}
+    \tilde{f}(A) = Ax =
+     \begin{bmatrix}
+      \dots & a_1 & \dots\\
+      \hline
+      \dots & \dots & \dots\\
+      \hline
+      \dots & a_m & \dots
+    \end{bmatrix}
+    x = 
+    \begin{bmatrix}
+      a_1^*x\\
+      \vdots\\
+      a_m^*x
+    \end{bmatrix}
+     = 
+     \begin{bmatrix}
+      \hat{f}(a_1)\\
+      \vdots\\
+      \hat{f}(a_m)
+    \end{bmatrix}
+  \end{equation*}  
+  From section $b$ we showed that the inner product algorithm $\hat{f}(a)$ is backwards stable, therefore $\hat{f}(a) = f(\hat{a})$ for some 
+  $\hat{a}$ with,
+  \begin{equation*}
+    \dfrac{||\hat{a} - a||}{||a||} = O(\emach).
+  \end{equation*} 
+  By substitution we get the following, 
+  \begin{equation*}
+    \tilde{f}(A) = Ax =
+     \begin{bmatrix}
+      \hat{f}(a_1)\\
+      \vdots\\
+      \hat{f}(a_m)
+    \end{bmatrix} = 
+    \begin{bmatrix}  
+      f(\hat{a_1})\\
+      \vdots\\
+      f(\hat{a_m})
+    \end{bmatrix} = 
+    f(\tilde{A}).
+  \end{equation*}  
+  Where the rows of $\tilde{A}$ are composed of $\hat{a_i}$. By construction we know that the relative error on the matrix $\tilde{A}$ when considering 
+  the induced infinity norm must a multiple of relative error of the rows $\hat{a_i}$ under the inner product algorithm. Note that there are $n$ inner product computations
+  on an $A^{nxm}$ matrix therefore we get the following,
+   \begin{equation*}
+    \dfrac{||\tilde{A} - A||}{||A||} = n\dfrac{||\hat{a} - a||}{||a||} \leq O(n \emach) = O(\emach).
+  \end{equation*}
+  Also note that hidden inside the bound for the backwards errors of the inner product is a factor of $m$ so the the constant on $O(\emach)$ looks to be dependent on $m$ and $n$(as expected from lecture 14). 
+  \vspace{.15in}
+
+  \item[d.]Fix $A \in \RR^{mxn}$. explain in at most 8 sentences why the obvious algorithm, $\tilde{f}(x)$ for the matrix-vector product problem $f(x) = Ax$ is 
+  not generally backwards stable. However, this result depends on dimension. In fact for what $m,n$ do we already know that this $\tilde{f}(x)$ is stable. \\
+  \solution As described in the previous problem, and at the end of lecture 14 the bounds of the backwards error are determined by, 
+  \begin{equation*}
+    \dfrac{||\tilde{x} - x||}{||x||} \leq C \kappa(A)\emach
+  \end{equation*}
+  where $\kappa(A)$ is the condition number on $A$ and $C$, as we've shown, is a product of $m$ and $n$. With a large enough matrix, one could consider a problem on the order of 
+  $mn = 1/\emach$ effectively exploding the backwards error. Clearly the algorithm is backwards stable for small $n$ and $m$, we showed that the inner product algorithm (which is itself 
+  a form of matrix vector product) were $m = 1$ and $n = 2$ is backwards stable in part b. 
+  \vspace{.15in}
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+\end{exercise}
+
+
+\vspace{1in}
+
+
+\begin{exercise}{15.2} Consider an algorithm for the problem of computing the (full) SVD
+  of a matrix. The data for this problem is a matrix $A$ and the solution is 
+  three matrices $U$ (unitary), $\Sigma$ (diagonal), and $V$ (unitary) such that $A = U\Sigma V^*$.
+  \begin{enumerate}
+    \item[a.] Explain what it would mean for this algorithm, to be backwards stable.\\
+    \solution Recalling the definition of backwards stability, for some algorithm $\tilde{f}$ which describes a proble, 
+    $f$ for each input $x$, 
+    \begin{equation*}
+      \tilde{f}(x) = f(\tilde{x}),  
+    \end{equation*}
+    For some $\tilde{x}$ where, 
+    \begin{equation*}
+      \dfrac{||\tilde{x} - x||}{||x||} = O(\emach).
+    \end{equation*}
+    Applying this definition we know that our algorithm for computing the full SVD will produce an $SVD$ factorization for $\tilde{A}$ where 
+    the relative difference between $A$ and $\tilde{A}$ is on the order of $\emach$.
+    
+    \vspace{.15in}
+
+    \item[b.] In fact, for a simple reason, this algorithm, cannot be backward stable. Explain,\\
+    \solution If the range of the problem is defined by all possible SVD and the input space is defined by all 
+    matrices $mxn$ than the condition $\tilde{f}(A) = f(\tilde{A})$ for some $\tilde{A}$ where the relative difference $\tilde{A}$ is on the order of $\emach$ can never be satisfied as it assumes that 
+    two matrices $A$ and $\tilde{A}$ have same $SVD$. A contradiction as $A \neq \tilde{A}$ and the $SVD$ is unique. \\
+
+    \vspace{.15in}
+    \item[c.] Fortunately, the standard algorithms for computing the SVD are stable. Explain what stability means for such an algorithm.\\
+    \solution  The approach described at the beginning of lecture 31 describes transforming the SVD problem into an eigenvalue problem which is more sensitive to perturbations. In doing so
+    we condition the problem of producing an $SVD$ on only the singular values and not the entire factorization $U\Sigma V^*$. 
+  \end{enumerate}
+\end{exercise}
+
+
+\vspace{1in}
+
+
+\begin{exercise}{16.2} The idea of this exercise is to carry out an experiment analogous to the one described in the lecture, but 
+  for SVD instead of QR factorization. \\
+  \begin{enumerate}
+    \item[a.] Write a Matlab program that constructs a $50x50$ matrix $A = USV'$ where $U$ and $V$ are random orthoganal matrices 
+    and $S$ is a diagonal matrix whose diagonal entries are random uniformly distributed numbers in $[0,1]$ sorted into non-increasing order. 
+    Have your program compute $[U2, S2, V2] = svd(A)$ and the norms of $U - U2$, $V - V2$, $S - S2$ ,and $A - U2S2V2$. Do this for five matrices and comment 
+    on the results.\\
+    \solution Consider the following Matlab script, \\
+    \textbf{Code:}
+    \begin{center}
+      \lstinputlisting[basicstyle = \small]{r1.txt}
+    \end{center} 
+    From the norm data we can see that the svd() implementation is producing error on the unitary matrices of size 2. The full reproduced 
+    matrix $A$ gives an accuracy on the same level as the sigma matrix (as expected, that's how the induced two-norm is defined), and the sigma matrix is accurate on the order of $10^{-14}$. As the hint suggests 
+    looking at the matrices $U'*U2$ and $V'*V2$ suggests that we actually produced very similar unitary matrices, except the signs of the columns are swapped around. \\
+    \textbf{Console:}
+    \begin{center}
+      \lstinputlisting[basicstyle = \small]{r2.txt}
+    \end{center} 
+
+    \vspace{.15in}
+
+    \item[b.] Fix teh signs in your computed SVD so that the difficulties of $A$ go away. Run the program again for five random matrices and comment on the various 
+    norms. Do they have a connection with $cond(A)$?\\
+    \solution The following Matlab script fixes the sign problem found in part a. \\
+    \textbf{Code:}
+    \begin{center}
+      \lstinputlisting[basicstyle = \small]{r3.txt}
+    \end{center} 
+    \textbf{Console}
+    \begin{center}
+      \lstinputlisting[basicstyle = \small]{r4.txt}
+    \end{center} 
+    From here we see a huge jump in the accuracy in the norms of our unitary matrices. From the looks of it it seems as though finding the unitary factors to the SVD has relatively the 
+    same conditioning as finding sigma values and the input matrix $A$. We can really explore the relationship between the unitary factors and the condition number of $A$ by simulating very 
+    ill-conditioned matrices. Doing so we see that the norms in our unitary factors have increased by a factor of $10^{10}$ similarly to the condition number of out matrix. \\
+    \textbf{Code:}
+    \begin{center}
+      \lstinputlisting[basicstyle = \small]{r5.txt}
+    \end{center} 
+
+    \vspace{.15in}
+
+    \item[c.] Replace the diagonal entries of $S$ by their sixth powers and repeat $b$. Do you see significant differences between the results of this exercise and those of 
+    the experiment for $QR$ factorization?\\
+    \solution Similarly to our previous simulation, we have affected the condition number of our matrix $A$. Doing so we see that the accuracy in the unitary factors has decreased while our 
+    relative forward error in $\sigma$ is still very good and our relative backwards error in $A$ is also very good. Note that these results suggests that the svd() algorithm is backwards stable.\\
+    \textbf{Code:}
+    \begin{center}
+      \lstinputlisting[basicstyle = \small]{r5.txt}
+    \end{center} 
+    Throughout this experiment we have had many attempts to perturb our input matrix 
+    $A$, and unlike in the $QR$ factorization experiment, our method for computing the $SVD$ continued to give us small backward error in the aNorms and small forward error in the sNorms. Had we framed our problem
+    as described in exercise 15, we would have had to take into account the error in $U$ and $V$ in our forward error which would point to an ill-conditioned problem as we explored experimentally, and analogously 
+    in the QR factorization experiment.
+  \end{enumerate}
+  
+\end{exercise}
+\vspace{1in}
+
+
+
+\begin{exercise}{17.2} A triangular system (17.1) is solved by back substitution. Exactly what does Theorem 17.1 imply about the error $||\tilde{x} - x||$?\\
+  \solution Theorem 17.1 states that Algorithm 17.1 is backwards stable if the computed solution for some $\tilde{x} \in \CC^m$ satisfies, 
+  \begin{equation*}
+    (R + \delta R)\tilde{x} = b,
+  \end{equation*}
+  for some upper-triangular $\delta R \in \CC^{mxm}$ with, 
+  \begin{equation*}
+    \dfrac{||\delta R||}{||R||} = O(\emach).
+  \end{equation*}
+  To reiterate our algorithm solves for $x$ with $R$ as input while fixing $b$. As we can see the Theorem makes a clear statement on how $R$ is bounded, and 
+  in order to prove backwards stability we must also show that $|x|$ bounded. Note that the problem is defined by $Rx = b$ where $b$ is fixed, by substitution 
+  into the first equation of the theorem we get, 
+  \begin{align*}
+    (R + \delta R)\tilde{x} &= Rx, \\
+    R\tilde{x} + \delta R\tilde{x} - Rx &= 0, \\
+    R\tilde{x} - Rx &= -\delta R\tilde{x}, \\
+    R(\tilde{x} - x) &= -\delta R\tilde{x}, \\
+    ||R(\tilde{x} - x)|| &= ||\delta R\tilde{x}||, \\
+    ||R|| ||(\tilde{x} - x)|| &= ||\tilde{x}||||\delta R||, \\
+    ||(\tilde{x} - x)|| &= ||\tilde{x}||\dfrac{||\delta R||}{||R||}, \\
+    ||(\tilde{x} - x)|| &= ||\tilde{x}||O(\emach). 
+  \end{align*}
+  Thus Theorem 17.1 implies that $||(\tilde{x} - x)|| = ||\tilde{x}||O(\emach)$.
+  
+\end{exercise}
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
